@@ -16,16 +16,16 @@ namespace InventoryAPI.Controllers
         /// <summary>
         /// Consulta la lista de productos con sus proveedores 
         /// </summary>
-        [HttpGet("list")]
-        [ProducesResponseType(typeof(Response<List<StockDTO>>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(Response<ErrorModel>), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(Response<ErrorModel>), StatusCodes.Status500InternalServerError)]
-        [Consumes("application/json")]
-        [Produces("application/json")]
-        public async Task<IActionResult> GetStock()
-        {
-            var stock = await _strepo.GetStock();
-            return Ok(new Response<List<StockDTO>> { Success = true , Message="Stock Actual", Data=stock});
-        }
+        //[HttpGet("list")]
+        //[ProducesResponseType(typeof(Response<List<StockDTO>>), StatusCodes.Status200OK)]
+        //[ProducesResponseType(typeof(Response<ErrorModel>), StatusCodes.Status400BadRequest)]
+        //[ProducesResponseType(typeof(Response<ErrorModel>), StatusCodes.Status500InternalServerError)]
+        //[Consumes("application/json")]
+        //[Produces("application/json")]
+        //public async Task<IActionResult> GetStock()
+        //{
+        //    var stock = await _strepo.GetStock();
+        //    return Ok(new Response<List<StockDTO>> { Success = true , Message="Stock Actual", Data=stock});
+        //}
     }
 }

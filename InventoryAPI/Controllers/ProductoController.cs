@@ -28,6 +28,18 @@ namespace InventoryAPI.Controllers
             return Ok(new Response<ProductoDTO> { Success=true, Message="Consulta realizada", Data=producto });
         }
 
+        [HttpGet("getList")]
+        [ProducesResponseType(typeof(Response<ProductoDTO>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Response<ErrorModel>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(Response<ErrorModel>), StatusCodes.Status500InternalServerError)]
+        [Consumes("application/json")]
+        [Produces("application/json")]
+        public async Task<IActionResult> GetListProductos()
+        {
+            var producto = await prodRepo.GetList();
+            return Ok(new Response<List<ProductoDTO>> { Success = true, Message = "Consulta realizada", Data = producto });
+        }
+
         /// <summary>
         /// Crea un nuevo producto en el inventario.
         /// </summary>
