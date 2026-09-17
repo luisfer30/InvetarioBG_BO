@@ -44,18 +44,44 @@ namespace InventoryAPI.Controllers
            var newProduct = await prodRepo.AddProducto(producto);
            return Ok(new Response<ProductoDTO> { Success = true, Message = "Nuevo producto fue creado", Data = newProduct });
         }
-                
-        // [HttpPut("Update")]
-        //public async Task<IActionResult> UpdateProducto(ProductoDTO producto)
-        //{
-        //     return Ok();
 
-        // }
+        [HttpPut("update")]
+        [ProducesResponseType(typeof(Response<bool>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Response<ErrorModel>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(Response<ErrorModel>), StatusCodes.Status500InternalServerError)]
+        [Consumes("application/json")]
+        [Produces("application/json")]
+        public async Task<IActionResult> UpdateProducto([FromBody] ProductoDTO producto)
+        {
+            var result = await prodRepo.UpdateProducto(producto);
 
-        // [HttpDelete("Delete/{id}")]
-        //public async  Task<IActionResult> DeleteProducto(int id)
-        //{
-        //     return Ok();
-        //}
+            return Ok(new Response<bool>
+            {
+                Success = result,
+                Message = result
+                    ? "Producto actualizado correctamente"
+                    : "No fue posible actualizar el producto",
+                Data = result
+            });
+        }
+
+        [HttpDelete("delete/{id}")]
+        [ProducesResponseType(typeof(Response<bool>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Response<ErrorModel>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(Response<ErrorModel>), StatusCodes.Status500InternalServerError)]
+        [Produces("application/json")]
+        public async Task<IActionResult> DeleteProducto(int id)
+        {
+            var result = await prodRepo.DeleteProducto(id);
+
+            return Ok(new Response<bool>
+            {
+                Success = result,
+                Message = result
+                    ? "Producto eliminado correctamente"
+                    : "Producto no encontrado",
+                Data = result
+            });
+        }
     }
 }

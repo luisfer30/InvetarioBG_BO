@@ -2,23 +2,10 @@
 {
     public class ProductoDTO
     {
-        public Guid Id { get; set; }
-        public string Objeto { get; set; } = string.Empty;
-        public long Cantidad { get; set; } = 0;
-        public List<string> Colores { get; set; } = [];
-        public bool Estado { get; set; } = false;
+        public int Id { get; set; }
+        public string Nombre { get; set; } = string.Empty;
+        public string? Modelo { get; set; }
+        public int CategoriaId { get; set; }
+        public int MarcaId { get; set; }
     }
-    
-
-    public enum Colores
-    {
-        Rojo = 1,
-        Verde = 2,
-        Azul = 3,
-        Amarillo = 4,
-        Negro = 5,
-        Plata = 6,
-        Blanco = 7
-    }
-
 }

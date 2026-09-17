@@ -35,5 +35,21 @@ namespace InventoryRepository.Repository
                 return false;
             }
         }
+        public async Task<bool> Eliminar(Expression<Func<T, bool>> filtro)
+        {
+            try
+            {
+                var filasAfectadas = await _context
+                    .Set<T>()
+                    .Where(filtro)
+                    .ExecuteDeleteAsync();
+
+                return filasAfectadas > 0;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
     }
 }

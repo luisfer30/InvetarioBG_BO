@@ -26,6 +26,21 @@ namespace InventoryRepository.Repository
         {
             var query = await _repo.Consultar(p => p.Id == id);
             return _mapper.Map<ProductoDTO>(query.FirstOrDefault());
-        } 
+        }
+        public async Task<bool> UpdateProducto(ProductoDTO req)
+        {
+            return await _repo.Actualizar(
+                x => x
+                    .SetProperty(p => p.Nombre, req.Nombre)
+                    .SetProperty(p => p.Modelo, req.Modelo)
+                    .SetProperty(p => p.CategoriaId, req.CategoriaId)
+                    .SetProperty(p => p.MarcaId, req.MarcaId),
+                p => p.Id == req.Id
+            );
+        }
+        public async Task<bool> DeleteProducto(int id)
+        {
+            return await _repo.Eliminar(p => p.Id == id);
+        }
     }
 }
