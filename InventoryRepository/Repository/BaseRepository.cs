@@ -14,6 +14,24 @@ namespace InventoryRepository.Repository
             var query = filtro == null ?  _context.Set<T>() : _context.Set<T>().Where(filtro);
             return await query.ToListAsync();
         }
+        public async Task<List<T>> ConsultarConIncludes(Expression<Func<T, bool>>? filtro = null,params Expression<Func<T, object>>[] includes)
+        {
+            IQueryable<T> query = _context
+                .Set<T>()
+                .AsNoTracking();
+
+            if (filtro != null)
+            {
+                query = query.Where(filtro);
+            }
+
+            foreach (var include in includes)
+            {
+                query = query.Include(include);
+            }
+
+            return await query.ToListAsync();
+        }
 
         public async Task<T> Crear(T modelo)
         {
