@@ -32,12 +32,27 @@ namespace InventoryAPI.Controllers
         [Produces("application/json")]
         public async Task<IActionResult> AddStock([FromBody] StockDTO request)
         {
+            var exists = await _strepo.ExistsStock(
+                request.ProductoId,
+                request.ProveedorId
+            );
+
+            if (exists)
+            {
+                return BadRequest(new Response<StockDTO>
+                {
+                    Success = false,
+                    Message = "Ya existe stock registrado para este producto y proveedor.",
+                    Data = null
+                });
+            }
+
             var stock = await _strepo.AddStock(request);
 
             return Ok(new Response<StockDTO>
             {
                 Success = true,
-                Message = "Stock registrado correctamente",
+                Message = "Stock registrado correctamente.",
                 Data = stock
             });
         }

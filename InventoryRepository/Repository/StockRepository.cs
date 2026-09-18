@@ -50,5 +50,14 @@ namespace InventoryRepository.Repository
                 Cantidad = newStock.Cantidad
             };
         }
+        public async Task<bool> ExistsStock(int productoId, int proveedorId)
+        {
+            var query = await _repo.Consultar(
+                x => x.ProductoId == productoId &&
+                     x.ProveedorId == proveedorId
+            );
+
+            return query.Any();
+        }
     }
 }

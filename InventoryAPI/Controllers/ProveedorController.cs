@@ -12,11 +12,7 @@ namespace InventoryAPI.Controllers
     [SwaggerTag("Servicios para la gestión de proveedores")]
     public class ProveedorController(ProveedorRepository prvrepo) : ControllerBase
     {
-        /// <summary>
-        /// Obtiene el detalle de un proveedor por ID.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+
         [HttpGet("getById/{id}")]
         [ProducesResponseType(typeof(Response<ProveedorDTO>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Response<ErrorModel>), StatusCodes.Status400BadRequest)]
@@ -29,11 +25,6 @@ namespace InventoryAPI.Controllers
             return Ok(new Response<ProveedorDTO> { Success = true, Message = "Consulta realizada", Data = proveedor });
         }
 
-        /// <summary>
-        /// Crea un nuevo proveedor en el inventario.
-        /// </summary>
-        /// <param name="producto"></param>
-        /// <returns></returns>
         [HttpPost("add")]
         [ProducesResponseType(typeof(Response<ProveedorDTO>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Response<ErrorModel>), StatusCodes.Status400BadRequest)]
@@ -45,5 +36,17 @@ namespace InventoryAPI.Controllers
             var newProv = await prvrepo.AddProveedor(producto);
             return Ok(new Response<ProveedorDTO> { Success = true, Message = "Nuevo producto fue creado", Data = newProv });
         }
+        [HttpGet("list")]
+        [ProducesResponseType(typeof(Response<ProveedorDTO>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Response<ErrorModel>), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(Response<ErrorModel>), StatusCodes.Status500InternalServerError)]
+        [Consumes("application/json")]
+        [Produces("application/json")]
+        public async Task<IActionResult> GetListProductos()
+        {
+            var producto = await prvrepo.GetList();
+            return Ok(new Response<List<ProveedorDTO>> { Success = true, Message = "Consulta realizada", Data = producto });
+        }
+
     }
 }
